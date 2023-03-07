@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DemoViperBindView</string>
+    <string name="text_open_detail_screen">Detail Screen</string>
+</resources>
