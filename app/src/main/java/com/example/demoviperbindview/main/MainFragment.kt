@@ -6,30 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.demoviperbindview.R
 import com.example.demoviperbindview.databinding.FragmentMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainFragment: Fragment(), MainContract.View {
+@AndroidEntryPoint
+class MainFragment: Fragment() {
 
     private lateinit var binding: FragmentMainBinding
-
-    private val presenter: MainPresenter = MainPresenter(this)
+    private val presenter: MainPresenter by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         if (!::binding.isInitialized) {
             val baseInflater = LayoutInflater.from(requireActivity())
-            binding = DataBindingUtil.inflate(baseInflater, R.layout.fragment_main, container, false)
+            binding =
+                DataBindingUtil.inflate(baseInflater, R.layout.fragment_main, container, false)
         }
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.onCreate()
+        presenter.apply {
+            setRouter(this@MainFragment)
+            onCreate()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,17 +42,13 @@ class MainFragment: Fragment(), MainContract.View {
         binding.btnNext.setOnClickListener {
             presenter.onItemClicked()
         }
-
-        presenter.bindView(this)
         presenter.onViewCreated()
+        observedData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unbindView()
-    }
-
-    override fun showData(data: String) {
-        binding.count = data
+    private fun observedData() {
+        presenter.data.observe(viewLifecycleOwner) {
+            binding.count = it
+        }
     }
 }

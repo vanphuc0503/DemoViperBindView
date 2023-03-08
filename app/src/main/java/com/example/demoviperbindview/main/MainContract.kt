@@ -1,15 +1,8 @@
 package com.example.demoviperbindview.main
 
 interface MainContract {
-    interface View {
-        fun showData(data: String)
-    }
 
     interface Presenter {
-
-        fun bindView(view: View)
-
-        fun unbindView()
 
         fun onBackClicked()
 

@@ -1,32 +1,30 @@
 package com.example.demoviperbindview.main
 
-import com.example.demoviperbindview.base.BasePresenter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainPresenter(
-    fragment: MainFragment
-) : BasePresenter(), MainContract.Presenter {
+@HiltViewModel
+class MainPresenter @Inject constructor() : ViewModel(), MainContract.Presenter {
 
-    private val router: MainContract.Router = MainRouter(fragment)
+    private var router: MainContract.Router? = null
     private val mainInteractor: MainInteractor = MainInteractor()
 
-    private var view: MainContract.View? = null
+    private val _data = MutableLiveData<String>()
+    val data: LiveData<String> = _data
 
-    override fun bindView(view: MainContract.View) {
-        this.view = view.apply {
-
-        }
-    }
-
-    override fun unbindView() {
-        view = null
+    fun setRouter(fragment: MainFragment) {
+        router = MainRouter(fragment)
     }
 
     override fun onBackClicked() {
-        router.finish()
+        router?.finish()
     }
 
     override fun onItemClicked() {
-        router.openDetailActivity()
+        router?.openDetailActivity()
     }
 
     override fun onViewCreated() {
@@ -35,16 +33,11 @@ class MainPresenter(
 
     override fun onCreate() {
         mainInteractor.getData({
-//            checkExistedView(view, {
-//
-//            }) {
-//                showData(it)
-//            }
-            view!!.showData(it)
+            _data.postValue(it)
         }, ::onError)
     }
 
     private fun onError(error: Throwable) {
-        view!!.showData(error.message.toString())
+        _data.postValue(error.message.toString())
     }
 }

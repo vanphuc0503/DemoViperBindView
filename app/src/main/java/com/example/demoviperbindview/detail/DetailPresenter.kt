@@ -1,21 +1,19 @@
 package com.example.demoviperbindview.detail
 
-class DetailPresenter(
-    fragment: DetailFragment
-) : DetailContract.Presenter {
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-    private val router: DetailContract.Router = DetailRouter(fragment)
-    private var view: DetailContract.View? = null
+@HiltViewModel
+class DetailPresenter @Inject constructor() : ViewModel(), DetailContract.Presenter {
 
-    override fun bindView(view: DetailContract.View) {
-        this.view = view
-    }
+    private var router: DetailContract.Router? = null
 
-    override fun unbindView() {
-        view = null
+    fun setRouter(fragment: DetailFragment) {
+        router = DetailRouter(fragment)
     }
 
     override fun onBackClicked() {
-        router.finish()
+        router?.finish()
     }
 }

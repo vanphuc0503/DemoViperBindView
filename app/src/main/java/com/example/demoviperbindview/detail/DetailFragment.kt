@@ -6,14 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.demoviperbindview.R
 import com.example.demoviperbindview.databinding.FragmentDetailBinding
+import com.example.demoviperbindview.databinding.FragmentMainBinding
+import com.example.demoviperbindview.main.MainPresenter
+import dagger.hilt.android.AndroidEntryPoint
 
-class DetailFragment : Fragment(), DetailContract.View {
+@AndroidEntryPoint
+class DetailFragment : Fragment() {
 
-    lateinit var binding: FragmentDetailBinding
+    private lateinit var binding: FragmentDetailBinding
+    private val presenter: DetailPresenter by viewModels()
 
-    private var presenter: DetailPresenter = DetailPresenter(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.apply {
+            setRouter(this@DetailFragment)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +42,6 @@ class DetailFragment : Fragment(), DetailContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        presenter.bindView(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unbindView()
     }
 
 
