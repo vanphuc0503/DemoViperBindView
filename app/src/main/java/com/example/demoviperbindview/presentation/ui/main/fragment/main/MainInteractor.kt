@@ -1,4 +1,4 @@
-package com.example.demoviperbindview.main
+package com.example.demoviperbindview.presentation.ui.main.fragment.main
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

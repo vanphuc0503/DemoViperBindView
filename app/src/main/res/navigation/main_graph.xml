@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.demoviperbindview.presentation.ui.main.fragment.main.MainFragment"
+        android:label="MainFragment" >
+
+        <action
+            android:id="@+id/openDetailScreen"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.demoviperbindview.presentation.ui.main.fragment.detail.DetailFragment"
+        android:label="DetailFragment" >
+
+        <action
+            android:id="@+id/openHomeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.example.demoviperbindview.presentation.ui.home.HomeActivity"
+        android:label="HomeActivity" />
+
+</navigation>

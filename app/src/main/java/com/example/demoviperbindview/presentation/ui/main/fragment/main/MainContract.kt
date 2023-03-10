@@ -1,4 +1,6 @@
-package com.example.demoviperbindview.main
+package com.example.demoviperbindview.presentation.ui.main.fragment.main
+
+import androidx.navigation.NavDirections
 
 interface MainContract {
 
@@ -6,7 +8,7 @@ interface MainContract {
 
         fun onBackClicked()
 
-        fun onItemClicked()
+        fun onItemClicked(action: NavDirections)
 
         fun onViewCreated()
 
@@ -19,6 +21,6 @@ interface MainContract {
 
     interface Router {
         fun finish()
-        fun openDetailActivity()
+        fun openDetailActivity(action: NavDirections)
     }
 }
