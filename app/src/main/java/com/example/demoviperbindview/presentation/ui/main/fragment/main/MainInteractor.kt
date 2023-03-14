@@ -1,21 +1,15 @@
 package com.example.demoviperbindview.presentation.ui.main.fragment.main
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.example.demoviperbindview.data.model.Crew
+import com.example.demoviperbindview.data.network.GenericResponse
+import com.example.demoviperbindview.domain.usecase.GetListCrewUseCase
+import com.example.demoviperbindview.domain.usecase.UseCase
+import javax.inject.Inject
 
-class MainInteractor() : MainContract.Interactor {
+class MainInteractor @Inject constructor(
+    private val getListCrewUseCase: GetListCrewUseCase
+) : MainContract.Interactor {
 
-    override fun getData(onSuccess: (String) -> Unit, onError: (Throwable) -> Unit) {
-        GlobalScope.launch {
-            runCatching {
-                delay(5000)
-            }.onSuccess {
-                onSuccess("Thanh cong")
-            }.onFailure {
-                onError(Throwable("Error"))
-            }
-        }
-    }
-
+    override suspend fun getCrews(): GenericResponse<List<Crew>> =
+        getListCrewUseCase.invoke(UseCase.None())
 }

@@ -1,4 +1,4 @@
-package com.example.demoviperbindview.presentation.base
+package com.example.demoviperbindview.presentation.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,8 +38,11 @@ abstract class BaseFragment<DB : ViewDataBinding, VM : ViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewCreated()
+        initObserved()
     }
 
     open fun initCreate() {}
     open fun initViewCreated() {}
+
+    open fun initObserved() {}
 }

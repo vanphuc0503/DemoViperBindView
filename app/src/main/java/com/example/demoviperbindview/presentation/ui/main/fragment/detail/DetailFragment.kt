@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.demoviperbindview.R
 import com.example.demoviperbindview.databinding.FragmentDetailBinding
-import com.example.demoviperbindview.presentation.base.BaseFragment
+import com.example.demoviperbindview.presentation.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +29,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailPresenter>() {
             }
             btnHome.setOnClickListener {
                 viewModel.onOpenHome(DetailFragmentDirections.openHomeActivity())
+            }
+            btnBack.setOnClickListener {
+                activity?.onBackPressedDispatcher?.onBackPressed()
             }
         }
     }

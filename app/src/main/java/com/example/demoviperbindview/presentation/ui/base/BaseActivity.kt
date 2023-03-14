@@ -1,4 +1,4 @@
-package com.example.demoviperbindview.presentation.base
+package com.example.demoviperbindview.presentation.ui.base
 
 import android.annotation.SuppressLint
 import android.os.Bundle

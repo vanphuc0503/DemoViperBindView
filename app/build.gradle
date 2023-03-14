@@ -21,6 +21,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "NEWS_API", "\"${NEWS_API}\""
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -62,6 +66,15 @@ dependencies {
 
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+
+    implementation 'com.github.bumptech.glide:glide:4.15.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
 }
 
 // Allow references to generated code

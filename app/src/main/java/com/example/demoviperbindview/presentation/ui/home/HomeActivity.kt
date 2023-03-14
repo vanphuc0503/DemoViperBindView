@@ -2,8 +2,8 @@ package com.example.demoviperbindview.presentation.ui.home
 
 import com.example.demoviperbindview.R
 import com.example.demoviperbindview.databinding.ActivityHomeBinding
-import com.example.demoviperbindview.presentation.base.BaseActivity
-import com.example.demoviperbindview.presentation.base.BaseViewModel
+import com.example.demoviperbindview.presentation.ui.base.BaseActivity
+import com.example.demoviperbindview.presentation.ui.base.BaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

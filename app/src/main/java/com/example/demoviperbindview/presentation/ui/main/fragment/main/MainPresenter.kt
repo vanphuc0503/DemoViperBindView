@@ -2,22 +2,23 @@ package com.example.demoviperbindview.presentation.ui.main.fragment.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import com.example.demoviperbindview.data.model.Crew
+import com.example.demoviperbindview.data.network.NetworkResponse
+import com.example.demoviperbindview.presentation.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainPresenter @Inject constructor(
-
-) : ViewModel(), MainContract.Presenter {
+    private val mainInteractor: MainContract.Interactor
+) : BaseViewModel(), MainContract.Presenter {
 
     private var router: MainContract.Router? = null
-    private val mainInteractor: MainInteractor = MainInteractor()
 
-    private val _data = MutableLiveData<String>()
-    val data: LiveData<String> = _data
+    private val _data = MutableLiveData<List<Crew>>()
+    val data: LiveData<List<Crew>> = _data
 
     fun setRouter(controller: NavController) {
         router = MainRouter(controller)
@@ -36,12 +37,13 @@ class MainPresenter @Inject constructor(
     }
 
     override fun onCreate() {
-        mainInteractor.getData({
-            _data.postValue(it)
-        }, ::onError)
-    }
-
-    private fun onError(error: Throwable) {
-        _data.postValue(error.message.toString())
+        callApiResult(call = { mainInteractor.getCrews() }, true) {
+            when (val response = it) {
+                response as NetworkResponse.Success -> {
+                    _data.postValue(response.body)
+                }
+                else -> {}
+            }
+        }
     }
 }

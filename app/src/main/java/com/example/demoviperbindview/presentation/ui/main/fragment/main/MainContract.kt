@@ -1,6 +1,8 @@
 package com.example.demoviperbindview.presentation.ui.main.fragment.main
 
 import androidx.navigation.NavDirections
+import com.example.demoviperbindview.data.model.Crew
+import com.example.demoviperbindview.data.network.GenericResponse
 
 interface MainContract {
 
@@ -16,7 +18,7 @@ interface MainContract {
     }
 
     interface Interactor {
-        fun getData(onSuccess: (String) -> Unit, onError: (Throwable) -> Unit)
+        suspend fun getCrews(): GenericResponse<List<Crew>>
     }
 
     interface Router {
